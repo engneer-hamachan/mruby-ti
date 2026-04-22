@@ -215,7 +215,7 @@ func evaluateNoUnionInstanceMethod(
 	m.parser.EndParsingExpression()
 
 	m.ctx.StartCallArg()
-	evaluatedArgs, err := collectArgs(m, methodT)
+	evaluatedArgs, err := CollectArgs(m, methodT)
 	if err != nil {
 		return err
 	}
@@ -232,11 +232,11 @@ func evaluateNoUnionInstanceMethod(
 		isBlock = true
 	}
 
-	err = checkAndPropagateArgs(m, class, methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, class, methodT, evaluatedArgs)
 	if err != nil || (methodT.IsBlockGiven != isBlock) {
 		if methodT.HasOverloads() {
 			for _, overloadT := range methodT.Overloads {
-				err = checkAndPropagateArgs(m, class, &overloadT, evaluatedArgs)
+				err = CheckAndPropagateArgs(m, class, &overloadT, evaluatedArgs)
 				if err == nil {
 					methodT = &overloadT
 					break

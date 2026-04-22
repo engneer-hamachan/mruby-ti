@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"ti/base"
 	"ti/context"
+	"ti/eval/method_evaluator"
 	"ti/parser"
 )
 
@@ -345,8 +346,29 @@ func (e *Evaluator) generalReferenceEvaluation(
 	p *parser.Parser,
 	ctx context.Context,
 	objectT *base.T,
+	methodT *base.T,
 	t *base.T,
 ) error {
+
+	methodEvaluator :=
+		method_evaluator.NewMethodEvaluator(
+			e,
+			p,
+			ctx,
+			objectT,
+			methodT,
+			false,
+		)
+
+	args, err :=
+		method_evaluator.CollectArgsForSquareBraquet(
+			methodEvaluator,
+			methodT,
+		)
+
+	if err != nil {
+		return err
+	}
 
 	for {
 		_, isCloseParentheses, err := p.ReadWithCheck("]")
@@ -374,7 +396,6 @@ func (e *Evaluator) generalReferenceEvaluation(
 			return fmt.Errorf("[]= is not defined method")
 		}
 
-		ctx.IsBind = true
 		p.SkipNewline()
 
 		nextT, err := p.Read()
@@ -383,6 +404,21 @@ func (e *Evaluator) generalReferenceEvaluation(
 		}
 
 		err = e.EvalExpr(p, ctx, nextT, 0)
+		if err != nil {
+			return err
+		}
+
+		lastEvaluatedT := p.GetLastEvaluatedT()
+		args = append(args, &lastEvaluatedT)
+
+		err =
+			method_evaluator.CheckAndPropagateArgs(
+				methodEvaluator,
+				methodT.DefinedClass,
+				methodT,
+				args,
+			)
+
 		if err != nil {
 			return err
 		}
@@ -396,6 +432,18 @@ func (e *Evaluator) generalReferenceEvaluation(
 		methodT := base.GetMethodT(ctx.GetFrame(), t.GetObjectClass(), "[]", false)
 		if methodT == nil {
 			return fmt.Errorf("[] is not defined method")
+		}
+
+		err =
+			method_evaluator.CheckAndPropagateArgs(
+				methodEvaluator,
+				methodT.DefinedClass,
+				methodT,
+				args,
+			)
+
+		if err != nil {
+			return err
 		}
 
 		p.Unget()
@@ -648,12 +696,12 @@ func (e *Evaluator) referenceEvaluation(
 	default:
 		methodT := base.GetMethodT(ctx.GetFrame(), base.TypeToString(t), "[]", false)
 		if methodT != nil {
-			return e.generalReferenceEvaluation(p, ctx, objectT, t)
+			return e.generalReferenceEvaluation(p, ctx, objectT, methodT, t)
 		}
 
 		methodT = base.GetMethodT(ctx.GetFrame(), base.TypeToString(t), "[]=", false)
 		if methodT != nil {
-			return e.generalReferenceEvaluation(p, ctx, objectT, t)
+			return e.generalReferenceEvaluation(p, ctx, objectT, methodT, t)
 		}
 
 		p.SkipToTargetToken("]")

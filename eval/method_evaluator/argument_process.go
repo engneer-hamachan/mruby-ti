@@ -342,7 +342,7 @@ func getEvaluatedArgsWithBlock(
 	m.ctx.StartCallArg()
 	defer m.ctx.EndCallArg()
 
-	argTs, err = collectArgs(m, methodT)
+	argTs, err = CollectArgs(m, methodT)
 	if err != nil {
 		return argTs, err
 	}
@@ -350,7 +350,7 @@ func getEvaluatedArgsWithBlock(
 	return expectBlockArgProcess(m, methodT, argTs)
 }
 
-func collectArgs(
+func CollectArgs(
 	m *MethodEvaluator,
 	methodT *base.T,
 ) (argTs []*base.T, err error) {
@@ -363,6 +363,70 @@ func collectArgs(
 	if methodT.IsEmptyDefineArgs() && !m.isParentheses {
 		return argTs, nil
 	}
+
+	for {
+		t, err := m.parser.Read()
+		if err != nil {
+			return argTs, err
+		}
+
+		if m.isNotArgT(methodT, argTs, t) {
+			break
+		}
+
+		nextT, err := m.makeNextArg(t)
+		if err != nil {
+			return argTs, err
+		}
+
+		if m.isEndOfCollectArgs(nextT) {
+			if !m.isParentheses {
+				m.parser.Unget()
+			}
+
+			break
+		}
+
+		if nextT.IsAsteriskPrefix() {
+			argTs, err = splatArg(m, m.ctx, nextT, argTs)
+			if err != nil {
+				return argTs, err
+			}
+
+			continue
+		}
+
+		// x.abc.def.ghi
+		zaorik := m.ctx.SuspendMultiValue()
+		err =
+			m.outerEval.EvalExpr(
+				m.parser,
+				m.ctx,
+				nextT,
+				m.parser.LastCallT.GetPower(),
+			)
+		zaorik()
+
+		if err != nil {
+			return argTs, err
+		}
+
+		lastEvaluatedT := m.parser.GetLastEvaluatedT()
+		argTs = append(argTs, &lastEvaluatedT)
+
+		// a + b
+		if len(argTs) > 0 && base.GetPowerByString(m.method) >= 35 {
+			break
+		}
+	}
+
+	return argTs, nil
+}
+
+func CollectArgsForSquareBraquet(
+	m *MethodEvaluator,
+	methodT *base.T,
+) (argTs []*base.T, err error) {
 
 	for {
 		t, err := m.parser.Read()

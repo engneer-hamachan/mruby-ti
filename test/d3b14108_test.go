@@ -12,9 +12,9 @@ func TestD3b14108(t *testing.T) {
 
 	output, _ := cmd.CombinedOutput()
 
-	expectedOutput := `./d3b14108.rb:::6:::untyped
-./d3b14108.rb:::10:::untyped
-./d3b14108.rb:::14:::untyped
+	expectedOutput := `./d3b14108.rb:::6:::Unknown
+./d3b14108.rb:::10:::Integer
+./d3b14108.rb:::14:::Unknown
 ./d3b14108.rb:::24:::String`
 
 	if strings.TrimSpace(string(output)) != strings.TrimSpace(expectedOutput) {

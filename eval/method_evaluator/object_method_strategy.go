@@ -229,7 +229,7 @@ func (o *objectClassStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -254,7 +254,7 @@ func (o *objectRaiseStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}

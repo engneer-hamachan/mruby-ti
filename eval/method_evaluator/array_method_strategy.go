@@ -34,7 +34,7 @@ func (a *arrayAppendStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func (c *concatArraystrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (r *replaceArraystrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -243,7 +243,7 @@ func (a *addArrayStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Array", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}

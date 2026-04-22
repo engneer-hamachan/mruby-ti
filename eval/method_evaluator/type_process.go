@@ -106,7 +106,7 @@ func propagationForCalledTo(
 			base.GetValueT(
 				methodT.GetFrame(),
 				class,
-				m.method,
+				methodT.GetMethodName(),
 				definedArg,
 				methodT.IsStatic,
 			)
@@ -116,7 +116,7 @@ func propagationForCalledTo(
 			base.SetValueT(
 				methodT.DefinedFrame,
 				methodT.DefinedClass,
-				m.method,
+				methodT.GetMethodName(),
 				definedArg,
 				argT,
 				methodT.IsStatic,
@@ -125,7 +125,7 @@ func propagationForCalledTo(
 			base.SetValueT(
 				methodT.GetFrame(),
 				class,
-				m.method,
+				methodT.GetMethodName(),
 				definedArg,
 				argT,
 				methodT.IsStatic,
@@ -518,7 +518,7 @@ func getDefinedArgT(
 	return definedArgT
 }
 
-func checkAndPropagateArgs(
+func CheckAndPropagateArgs(
 	m *MethodEvaluator,
 	class string,
 	methodT *base.T,
@@ -722,7 +722,7 @@ func checkAndPropagateArgsForUnionWithReturnT(
 ) (returnT *base.T, err error) {
 
 	for idx, class := range classNames {
-		err = checkAndPropagateArgs(m, class, methodTs[idx], evalutedArgs)
+		err = CheckAndPropagateArgs(m, class, methodTs[idx], evalutedArgs)
 		if err != nil {
 			return nil, err
 		}

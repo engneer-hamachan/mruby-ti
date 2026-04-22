@@ -28,7 +28,7 @@ func (k *kernelYieldStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Kernel", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Kernel", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func (k *kernelPrintStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Kernel", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Kernel", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}

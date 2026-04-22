@@ -116,16 +116,6 @@ func (b *Bind) handleMultipleToScalarAsigntment(
 			idx++
 		}
 
-	case base.UNION:
-		for _, variant := range rightT.GetVariants() {
-			if variant.IsArrayType() {
-				b.handleMultipleToMultipleAsigntment(leftTs, &variant)
-				continue
-			}
-
-			b.handleMultipleToScalarAsigntment(ctx, leftTs, &variant)
-		}
-
 	default:
 		if leftTs[0].HasDefault() {
 			return nil

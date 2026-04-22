@@ -31,7 +31,7 @@ func (h *hashMergeStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Hash", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Hash", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func (h *hashDestructionMergeStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Hash", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Hash", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
@@ -97,7 +97,7 @@ func (h *hashShiftStrategy) evaluate(m *MethodEvaluator) error {
 		return err
 	}
 
-	err = checkAndPropagateArgs(m, "Hash", methodT, evaluatedArgs)
+	err = CheckAndPropagateArgs(m, "Hash", methodT, evaluatedArgs)
 	if err != nil {
 		return err
 	}
