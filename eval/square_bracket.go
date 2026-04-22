@@ -760,12 +760,9 @@ func (s *SquareBracket) Evaluation(
 		return nil
 	}
 
-	methodT := base.GetMethodT(ctx.GetFrame(), base.TypeToString(&lastT), "[]", false)
-	if methodT != nil && !t.IsBeforeSpace {
-		p.SkipToTargetToken("]")
-		p.SetLastEvaluatedT(methodT)
-
-		return nil
+	methodT := base.GetMethodT(lastT.GetFrame(), lastT.GetObjectClass(), "[]", false)
+	if methodT != nil && p.IsParsingExpression() && !t.IsBeforeSpace {
+		return e.generalReferenceEvaluation(p, ctx, base.MakeUnknown(), methodT, &lastT)
 	}
 
 	if lastT.IsUnknownType() && !t.IsBeforeSpace {
