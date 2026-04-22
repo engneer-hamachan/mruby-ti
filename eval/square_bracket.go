@@ -391,7 +391,7 @@ func (e *Evaluator) generalReferenceEvaluation(
 	switch isEquale {
 	// a[0] = 1
 	case true:
-		methodT := base.GetMethodT(ctx.GetFrame(), t.GetObjectClass(), "[]=", false)
+		methodT := base.GetMethodT(t.GetFrame(), t.GetObjectClass(), "[]=", false)
 		if methodT == nil {
 			return fmt.Errorf("[]= is not defined method")
 		}
@@ -423,13 +423,14 @@ func (e *Evaluator) generalReferenceEvaluation(
 			return err
 		}
 
-		p.SetLastEvaluatedT(methodT)
+		t := method_evaluator.CalculateExecutionType(methodEvaluator, methodT, args)
+		p.SetLastEvaluatedT(t)
 
 		return nil
 
 	// a[0]
 	default:
-		methodT := base.GetMethodT(ctx.GetFrame(), t.GetObjectClass(), "[]", false)
+		methodT := base.GetMethodT(t.GetFrame(), t.GetObjectClass(), "[]", false)
 		if methodT == nil {
 			return fmt.Errorf("[] is not defined method")
 		}
@@ -448,7 +449,8 @@ func (e *Evaluator) generalReferenceEvaluation(
 
 		p.Unget()
 
-		p.SetLastEvaluatedT(methodT)
+		t := method_evaluator.CalculateExecutionType(methodEvaluator, methodT, args)
+		p.SetLastEvaluatedT(t)
 
 		return e.evalPriorityExp(p, ctx)
 	}
@@ -694,12 +696,12 @@ func (e *Evaluator) referenceEvaluation(
 		return e.integerReferenceEvaluation(p, ctx, objectT, t)
 
 	default:
-		methodT := base.GetMethodT(ctx.GetFrame(), base.TypeToString(t), "[]", false)
+		methodT := base.GetMethodT(t.GetFrame(), t.GetObjectClass(), "[]", false)
 		if methodT != nil {
 			return e.generalReferenceEvaluation(p, ctx, objectT, methodT, t)
 		}
 
-		methodT = base.GetMethodT(ctx.GetFrame(), base.TypeToString(t), "[]=", false)
+		methodT = base.GetMethodT(t.GetFrame(), t.GetObjectClass(), "[]=", false)
 		if methodT != nil {
 			return e.generalReferenceEvaluation(p, ctx, objectT, methodT, t)
 		}

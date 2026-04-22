@@ -85,7 +85,7 @@ func conditioningMethodReturn(
 	return methodT
 }
 
-func calculateExecutionType(
+func CalculateExecutionType(
 	m *MethodEvaluator,
 	methodT *base.T,
 	args []*base.T,
@@ -104,7 +104,7 @@ func calculateExecutionType(
 	case base.UNION:
 		var newVariants []base.T
 		for _, variant := range methodT.GetVariants() {
-			processedT := calculateExecutionType(m, &variant, args)
+			processedT := CalculateExecutionType(m, &variant, args)
 			newVariants = append(newVariants, *processedT)
 		}
 
@@ -146,7 +146,7 @@ func calculateExecutionType(
 	case base.ARRAY:
 		var newVariants []base.T
 		for _, variant := range methodT.GetVariants() {
-			processedT := calculateExecutionType(m, &variant, args)
+			processedT := CalculateExecutionType(m, &variant, args)
 			newVariants = append(newVariants, *processedT)
 		}
 
@@ -246,7 +246,7 @@ func evaluateNoUnionInstanceMethod(
 
 		if err != nil {
 			m.parser.SetLastEvaluatedT(
-				calculateExecutionType(m, methodT, evaluatedArgs),
+				CalculateExecutionType(m, methodT, evaluatedArgs),
 			)
 
 			return err
@@ -270,7 +270,7 @@ func evaluateNoUnionInstanceMethod(
 		methodT = methodT.DeepCopy()
 	}
 
-	returnT := calculateExecutionType(m, methodT, evaluatedArgs)
+	returnT := CalculateExecutionType(m, methodT, evaluatedArgs)
 
 	if methodT.IsCaptureOwner {
 		if m.evaluatedObjectT.GetOwnerT() != nil {
