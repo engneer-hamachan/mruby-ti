@@ -5,7 +5,7 @@ import (
 	"ti/base"
 )
 
-func handleRefference(m *MethodEvaluator) error {
+func HandleRefference(m *MethodEvaluator) error {
 	nextT, err := m.parser.Read()
 	if err != nil {
 		return err
@@ -311,7 +311,7 @@ func evaluateNoUnionInstanceMethod(
 		)
 	}
 
-	return handleRefference(m)
+	return HandleRefference(m)
 }
 
 func evaluateUnionInstanceMethod(
@@ -348,5 +348,5 @@ func evaluateUnionInstanceMethod(
 
 	m.parser.SetLastEvaluatedT(returnT)
 
-	return handleRefference(m)
+	return HandleRefference(m)
 }

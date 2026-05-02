@@ -452,7 +452,9 @@ func (e *Evaluator) generalReferenceEvaluation(
 		t := method_evaluator.CalculateExecutionType(methodEvaluator, methodT, args)
 		p.SetLastEvaluatedT(t)
 
-		return e.evalPriorityExp(p, ctx)
+		e.evalPriorityExp(p, ctx)
+
+		return method_evaluator.HandleRefference(methodEvaluator)
 	}
 }
 

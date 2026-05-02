@@ -4,27 +4,13 @@
   "extends": [],
   "instance_methods": [
     {
-      "name": "to_poro",
-      "arguments": [],
-      "return_type": {
-        "type": [
-          "JS::Object",
-          "String",
-          "Symbol",
-          "[JS::Object]",
-          "Int",
-          "Float",
-          "NilClass",
-          "Bool"
-        ]
-      }
-    },
-    {
       "name": "[]",
       "arguments": [
         {
           "type": [
-            "Symbol"
+            "String",
+            "Symbol",
+            "Int"
           ]
         }
       ],
@@ -32,25 +18,165 @@
         "type": [
           "JS::Object"
         ]
-      }
+      },
+      "document": "Property Access\nReturns a JS::Object wrapper, or nil for null/undefined."
     },
     {
-      "name": "fetch",
+      "name": "[]=",
       "arguments": [
         {
           "type": [
-            "String"
+            "String",
+            "Symbol"
+          ]
+        },
+        {
+          "type": [
+            "Untyped"
           ]
         }
       ],
       "return_type": {
         "type": [
+          "Untyped"
+        ]
+      },
+      "document": "Setter automatically converts Ruby types to JS types."
+    },
+    {
+      "name": "==",
+      "arguments": [
+        {
+          "type": [
+            "Untyped"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      },
+      "document": "Comparison operators\n== compares with Ruby native types (String, Integer, Float, true, false)\nor with other JS::Object (by ref_id)"
+    },
+    {
+      "name": "<=>",
+      "arguments": [
+        {
+          "type": [
+            "Int",
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Int",
           "NilClass"
         ]
       },
-      "block_parameters": [
-        "Untyped"
-      ]
+      "document": "Integer comparison operators (only work when JS type is number/bigint)"
+    },
+    {
+      "name": ">",
+      "arguments": [
+        {
+          "type": [
+            "Int",
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": ">=",
+      "arguments": [
+        {
+          "type": [
+            "Int",
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "<",
+      "arguments": [
+        {
+          "type": [
+            "Int",
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "<=",
+      "arguments": [
+        {
+          "type": [
+            "Int",
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "to_s",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "String"
+        ]
+      },
+      "document": "Explicit Type Conversion Methods"
+    },
+    {
+      "name": "to_i",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Int"
+        ]
+      }
+    },
+    {
+      "name": "to_f",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Float"
+        ]
+      }
+    },
+    {
+      "name": "to_a",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "[JS::Object]"
+        ]
+      }
     },
     {
       "name": "addEventListener",
@@ -67,7 +193,58 @@
         ]
       },
       "block_parameters": [
-        "String"
+        "JS::Object"
+      ],
+      "document": "Event Handling"
+    },
+    {
+      "name": "fetch",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        },
+        {
+          "type": [
+            "Hash",
+            "NilClass"
+          ],
+          "is_default": true
+        }
+      ],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      },
+      "block_parameters": [
+        "JS::Object"
+      ],
+      "document": "Async operations"
+    },
+    {
+      "name": "await",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object",
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "then",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object",
+          "NilClass"
+        ]
+      },
+      "block_parameters": [
+        "JS::Object",
+        "NilClass"
       ]
     },
     {
@@ -80,7 +257,57 @@
       }
     },
     {
-      "name": "querySelector",
+      "name": "setTimeout",
+      "arguments": [
+        {
+          "type": [
+            "Int"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Int"
+        ]
+      },
+      "document": "Timer operations"
+    },
+    {
+      "name": "clearTimeout",
+      "arguments": [
+        {
+          "type": [
+            "Int"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "type",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Symbol"
+        ]
+      },
+      "document": "Debugging"
+    },
+    {
+      "name": "refcount",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Int"
+        ]
+      }
+    },
+    {
+      "name": "createElement",
       "arguments": [
         {
           "type": [
@@ -93,7 +320,22 @@
           "JS::Object"
         ]
       },
-      "document": "Methods"
+      "document": "DOM manipulation methods defined in C"
+    },
+    {
+      "name": "createTextNode",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
     },
     {
       "name": "appendChild",
@@ -106,7 +348,7 @@
       ],
       "return_type": {
         "type": [
-          "JS::Object"
+          "Bool"
         ]
       }
     },
@@ -121,42 +363,7 @@
       ],
       "return_type": {
         "type": [
-          "JS::Object"
-        ]
-      }
-    },
-    {
-      "name": "setAttribute",
-      "arguments": [
-        {
-          "type": [
-            "String"
-          ]
-        },
-        {
-          "type": [
-            "String"
-          ]
-        }
-      ],
-      "return_type": {
-        "type": [
-          "NilClass"
-        ]
-      }
-    },
-    {
-      "name": "removeAttribute",
-      "arguments": [
-        {
-          "type": [
-            "String"
-          ]
-        }
-      ],
-      "return_type": {
-        "type": [
-          "NilClass"
+          "Bool"
         ]
       }
     },
@@ -176,12 +383,54 @@
       ],
       "return_type": {
         "type": [
-          "JS::Object"
+          "Bool"
         ]
       }
     },
     {
-      "name": "createElement",
+      "name": "insertBefore",
+      "arguments": [
+        {
+          "type": [
+            "JS::Object"
+          ]
+        },
+        {
+          "type": [
+            "JS::Object",
+            "NilClass"
+          ],
+          "is_default": true
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "setAttribute",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        },
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "removeAttribute",
       "arguments": [
         {
           "type": [
@@ -191,38 +440,78 @@
       ],
       "return_type": {
         "type": [
-          "JS::Object"
+          "Bool"
         ]
       }
     },
     {
-      "name": "createTextNode",
-      "arguments": [
-        {
-          "type": [
-            "String"
-          ]
-        }
-      ],
-      "return_type": {
-        "type": [
-          "JS::Object"
-        ]
-      }
-    },
-    {
-      "name": "className",
+      "name": "preventDefault",
       "arguments": [],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "stopPropagation",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "highlightAll",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "getElementById",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
       "return_type": {
         "type": [
           "JS::Object"
         ]
       },
-      "document": "Properties"
+      "document": "Common properties/methods (examples)\nNote: All of these now return a JS::Object wrapper that may need explicit conversion."
     },
     {
-      "name": "classList",
-      "arguments": [],
+      "name": "querySelector",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object",
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "querySelectorAll",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
       "return_type": {
         "type": [
           "JS::Object"
@@ -243,7 +532,8 @@
       "arguments": [],
       "return_type": {
         "type": [
-          "JS::Object"
+          "JS::Object",
+          "NilClass"
         ]
       }
     },
@@ -257,11 +547,28 @@
       }
     },
     {
-      "name": "innerHTML",
+      "name": "style",
       "arguments": [],
       "return_type": {
         "type": [
           "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "item",
+      "arguments": [
+        {
+          "type": [
+            "String",
+            "Int"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object",
+          "NilClass"
         ]
       }
     },
@@ -281,39 +588,6 @@
       }
     },
     {
-      "name": "style",
-      "arguments": [],
-      "return_type": {
-        "type": [
-          "JS::Object"
-        ]
-      }
-    },
-    {
-      "name": "style=",
-      "arguments": [
-        {
-          "type": [
-            "String"
-          ]
-        }
-      ],
-      "return_type": {
-        "type": [
-          "String"
-        ]
-      }
-    },
-    {
-      "name": "textContent",
-      "arguments": [],
-      "return_type": {
-        "type": [
-          "JS::Object"
-        ]
-      }
-    },
-    {
       "name": "textContent=",
       "arguments": [
         {
@@ -325,6 +599,425 @@
       "return_type": {
         "type": [
           "String"
+        ]
+      }
+    },
+    {
+      "name": "body",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "status",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "push",
+      "arguments": [
+        {
+          "type": [
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "content",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "classList",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "add",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ],
+          "is_asterisk": true
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "remove",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ],
+          "is_asterisk": true
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "target",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "getAttribute",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object",
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "length",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "hostname",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "href",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "URL",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "history",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "location",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "pathname",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "pushState",
+      "arguments": [
+        {
+          "type": [
+            "Untyped"
+          ]
+        },
+        {
+          "type": [
+            "String"
+          ]
+        },
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "replaceState",
+      "arguments": [
+        {
+          "type": [
+            "Untyped"
+          ]
+        },
+        {
+          "type": [
+            "String"
+          ]
+        },
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "createObjectURL",
+      "arguments": [
+        {
+          "type": [
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "create_object",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "create_array",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "setItem",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        },
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      },
+      "document": "localStorage methods"
+    },
+    {
+      "name": "getItem",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object",
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "removeItem",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "NilClass"
+        ]
+      }
+    },
+    {
+      "name": "key",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Untyped"
+        ]
+      }
+    },
+    {
+      "name": "line",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Untyped"
+        ]
+      }
+    },
+    {
+      "name": "prevLine",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Untyped"
+        ]
+      }
+    },
+    {
+      "name": "__picoIndentApply",
+      "arguments": [],
+      "return_type": {
+        "type": [
+          "Untyped"
+        ]
+      }
+    },
+    {
+      "name": "_js_remove_event_listener_wrapper",
+      "arguments": [
+        {
+          "type": [
+            "Int"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "new",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS::Object"
+        ]
+      }
+    },
+    {
+      "name": "dispatchEvent",
+      "arguments": [
+        {
+          "type": [
+            "JS::Object"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "JS"
+        ]
+      }
+    }
+  ],
+  "class_methods": [
+    {
+      "name": "removeEventListener",
+      "arguments": [
+        {
+          "type": [
+            "Int"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Bool"
+        ]
+      }
+    },
+    {
+      "name": "register_callback",
+      "arguments": [
+        {
+          "type": [
+            "String"
+          ]
+        }
+      ],
+      "return_type": {
+        "type": [
+          "Int"
         ]
       }
     }
