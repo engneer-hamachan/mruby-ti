@@ -22,6 +22,10 @@ func (t *T) GetMethodName() string {
 }
 
 func (t *T) GetObjectClass() string {
+	if t == nil {
+		return ""
+	}
+
 	return t.objectClass
 }
 
@@ -35,6 +39,9 @@ func (t *T) GetKey() string {
 }
 
 func (t *T) GetFrame() string {
+	if t == nil {
+		return ""
+	}
 	return t.frame
 }
 

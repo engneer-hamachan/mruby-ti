@@ -33,7 +33,7 @@ func setDefineInfos(p *parser.Parser) {
 		var prefix string
 
 		prefix += "@"
-		prefix += p.FileName + ":::"
+		prefix += article.P.FileName + ":::"
 		prefix += fmt.Sprintf("%d", defineRow)
 		prefix += ":::"
 
