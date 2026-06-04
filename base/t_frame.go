@@ -640,6 +640,12 @@ func GetConstValueT(frame string, class string, variable string) *T {
 		return t
 	}
 
+	// fall back to top-level constant (constants are visible from inner scopes)
+	t, ok = TFrame[constTFrameKey("", variable)]
+	if ok {
+		return t
+	}
+
 	return nil
 }
 
