@@ -305,6 +305,7 @@ func (e *Evaluator) Eval(
 	case t.IsNewLineIdentifier():
 		p.Unget()
 		p.EndParsingExpression()
+		p.ClearLastStatementReturned()
 
 		return nil
 

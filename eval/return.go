@@ -25,6 +25,10 @@ func (r *Return) Evaluation(
 
 	p.SetLastEvaluatedT(base.MakeUnknown())
 
+	// mark that this statement is a return so a trailing `if` modifier
+	// (guard clause) can keep the negated narrowing afterwards.
+	defer p.SetLastStatementReturned()
+
 	nextT, err := p.Read()
 	if err != nil {
 		return err

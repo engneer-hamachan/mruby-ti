@@ -8,28 +8,29 @@ import (
 )
 
 type Parser struct {
-	Lexer               lexer.Lexer
-	token               rune
-	ungetFlg            bool
-	FileName            string
-	Row                 int
-	ErrorRow            int
-	lastEvaluatedT      any
-	LastT               base.T
-	CurrentT            base.T
-	LastCallT           *base.T
-	lastCallFrame       [3]string
-	lastResolvedMethodT *base.T
-	isParsingExpression bool
-	lastReturnT         []base.T
-	tmpBlockParamaters  []base.T
-	tmpEvaluatedArgs    []*base.T
-	Debug               bool
-	LspTargetRow        int
-	LspSuggestTargetT   base.T
-	Errors              []error
-	DefineInfos         []string
-	BeforeString        string
+	Lexer                 lexer.Lexer
+	token                 rune
+	ungetFlg              bool
+	FileName              string
+	Row                   int
+	ErrorRow              int
+	lastEvaluatedT        any
+	LastT                 base.T
+	CurrentT              base.T
+	LastCallT             *base.T
+	lastCallFrame         [3]string
+	lastResolvedMethodT   *base.T
+	isParsingExpression   bool
+	lastStatementReturned bool
+	lastReturnT           []base.T
+	tmpBlockParamaters    []base.T
+	tmpEvaluatedArgs      []*base.T
+	Debug                 bool
+	LspTargetRow          int
+	LspSuggestTargetT     base.T
+	Errors                []error
+	DefineInfos           []string
+	BeforeString          string
 }
 
 func New(lexer lexer.Lexer, file string) Parser {
@@ -133,6 +134,18 @@ func (p *Parser) ConsumeLastReturnT() []base.T {
 	p.lastReturnT = []base.T{}
 
 	return returnTs
+}
+
+func (p *Parser) SetLastStatementReturned() {
+	p.lastStatementReturned = true
+}
+
+func (p *Parser) ClearLastStatementReturned() {
+	p.lastStatementReturned = false
+}
+
+func (p *Parser) IsLastStatementReturned() bool {
+	return p.lastStatementReturned
 }
 
 func (p *Parser) IsParsingExpression() bool {

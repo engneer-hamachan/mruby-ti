@@ -462,13 +462,22 @@ func (i *IfUnless) Evaluation(
 
 	lastEvaluatedT := p.GetLastEvaluatedT()
 
+	isGuardClauseContext := isParsingExpr && p.IsLastStatementReturned()
+	p.ClearLastStatementReturned()
+
 	zaoriks, err := i.getBackupContext(e, *p, ctx)
 	if err != nil {
 		p.Fatal(ctx, err)
 	}
 
-	for _, zaorik := range zaoriks {
-		defer zaorik()
+	switch isGuardClauseContext {
+	case true: // return x if x.is_a?(NilClass)
+		defer i.narrowing(ctx)
+
+	default:
+		for _, zaorik := range zaoriks {
+			defer zaorik()
+		}
 	}
 
 	endIdentifier := i.getEndIdentifier(p)
